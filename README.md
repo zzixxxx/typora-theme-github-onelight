@@ -78,11 +78,34 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 
 ## 编辑区底部插画（可选，默认关闭）
 
-主题支持在编辑区背景底部铺一张自己的插画，右下角的小人 gif 会叠在它上面；插画上盖一层从顶部全白渐入的白纱，保证文字可读。仓库不附带图片，启用方法：把图片放进 `github-onelight/`，改 `github-onelight.css` 里 `content` 上方那个 `:root` 的变量：
+主题支持在编辑区背景底部铺一张自己的插画，右下角的小人 gif 会叠在它上面；插画上盖一层从顶部全白渐入的白纱，保证文字可读。仓库不附带图片。
+
+推荐做法是**另建一个叠加主题文件**，这样主题菜单里多一项，可以随时切换，也不用改本文件。例如新建 `github-onelight-xxx.css`：
+
+```css
+@import url("./github-onelight.css");
+
+:root {
+    --bg-art-ratio: 0.5303;                    /* 插画 高/宽 比 */
+    --bg-art-veil: rgba(255, 255, 255, .62);   /* 白纱透明度，alpha 越大插画越淡 */
+}
+
+content {
+    background-image:
+        url('./github-onelight/mutou2.gif'),
+        linear-gradient(to bottom, #fff 0%, var(--bg-art-veil) 28%, var(--bg-art-veil) 100%),
+        url('./github-onelight-xxx/bg-art.jpg');   /* 你的图片 */
+    background-position: 100% 100%, 50% 100%, 50% 100%;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-size: 150px auto, 100% calc(var(--bg-art-width) * var(--bg-art-ratio)), var(--bg-art-width) auto;
+}
+```
+
+也可以直接改本文件 `content` 上方 `:root` 里的 `--bg-art`，其余变量：
 
 | 变量 | 默认值 | 作用 |
 | ---- | ------ | ---- |
-| `--bg-art` | `none` | 插画路径，如 `url('./github-onelight/bg-art.jpg')` |
+| `--bg-art` | `none` | 插画路径 |
 | `--bg-art-width` | `100vw` | 插画宽度，建议用 vw，居中贴底 |
 | `--bg-art-ratio` | `0.5303` | 插画 高/宽 比，换图时同步改，白纱高度靠它跟随 |
 | `--bg-art-veil` | `rgba(255,255,255,.62)` | 白纱透明度，alpha 越大插画越淡 |
