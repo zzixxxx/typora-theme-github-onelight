@@ -43,10 +43,12 @@ pre .CodeMirror-gutters {
     background: inherit;
 }
 
-.md-diagram .md-diagram-panel {
+/* 图表面板：透明底，让页面背景 / Leimi 插画透出来（Mermaid 的 SVG 本身不带底色） */
+.md-diagram .md-diagram-panel,
+.md-diagram-panel .md-diagram-panel-preview {
     border-radius: var(--radius-small);
     border-color: transparent !important;
-    background: var(--bg-color2);
+    background: transparent;
 }
 
 pre.md-focus .md-diagram-panel {
