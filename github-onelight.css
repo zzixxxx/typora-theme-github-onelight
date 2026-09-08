@@ -8,7 +8,6 @@
  *           表格（圆角卡片 + 斑马纹）/ 数学公式块 / 8px 圆角体系 /
  *           大纲树形连线 / 文件树 & 文件列表 / 菜单、按钮、输入框圆角
  * phycat  ：图片样式（段落居中 / 12px 圆角 / 悬停放大 1.05）
- * 新增：点击图片放大（纯 CSS 灯箱，点击任意位置关闭；兼容"首行缩进"设置）
  * 目录：github-onelight/style/*.css 各模块样式（本文件只做 @import 与变量定义）
  *       github-onelight/fonts/  字体    github-onelight/img/  图片
  * 叠加：github-onelight-leimi.css 在本体之上启用编辑区底部插画
@@ -94,8 +93,4 @@
     --inline-code-color: var(--text-code);      /* 行内代码文字（mdmdt） */
     --monospace: "JetBrains Mono", "Cascadia Code", Consolas, "Courier New", monospace;
 
-    /* 图片灯箱 */
-    --lightbox-backdrop: rgba(0, 0, 0, .6);
-    --lightbox-max-width: 92vw;
-    --lightbox-max-height: 92vh;
 }
