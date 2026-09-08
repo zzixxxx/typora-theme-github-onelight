@@ -1,4 +1,4 @@
-# 将主题安装到 Typora 主题目录（Windows）
+﻿# 将主题安装到 Typora 主题目录（Windows）
 # 用法：在仓库根目录执行  powershell -ExecutionPolicy Bypass -File .\install.ps1
 #       只装本体不装 Leimi 版：       powershell -ExecutionPolicy Bypass -File .\install.ps1 -SkipLeimi
 

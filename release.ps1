@@ -1,4 +1,4 @@
-# 打包 Release zip：解压到 Typora 主题目录即可使用
+﻿# 打包 Release zip：解压到 Typora 主题目录即可使用
 # 用法：powershell -ExecutionPolicy Bypass -File .\release.ps1 -Version 1.0.0
 #       产物：dist\github-onelight-v1.0.0.zip，内含
 #         github-onelight.css / github-onelight-leimi.css / github-onelight\（fonts、img、style）
