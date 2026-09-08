@@ -980,7 +980,12 @@ pre[lang=diff] .cm-s-inner .cm-error {
     transform: none !important;
 }
 
-/* 全屏遮罩 */
+/* 全屏遮罩
+ * 注意 3：Typora 在 mousedown 时就切换放大态，图片脱离文档流后下方内容立刻上移，
+ *         mouseup 时指针下面已经是下一张图，浏览器会把光标落到它上面，导致"放大的是下一张"。
+ *         因此遮罩出现后的前 0.45s 先接住指针事件（它是 .md-image 的伪元素，光标仍留在本图），
+ *         之后再恢复点击穿透，保证"点击任意位置关闭"。
+ */
 #write .md-image.md-img-loaded.md-expand::before {
     content: '';
     position: fixed;
@@ -988,7 +993,12 @@ pre[lang=diff] .cm-s-inner .cm-error {
     background: var(--lightbox-backdrop);
     z-index: 9998;
     pointer-events: none;
-    animation: gh-ol-backdrop-in .18s ease-out;
+    animation: gh-ol-backdrop-in .18s ease-out, gh-ol-click-guard .45s linear;
+}
+
+@keyframes gh-ol-click-guard {
+    0%, 99% { pointer-events: auto; }
+    100%    { pointer-events: none; }
 }
 
 /* 仅对加载成功的图片生效，加载失败的占位图不进灯箱 */
