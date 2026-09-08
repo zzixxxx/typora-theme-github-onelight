@@ -1,0 +1,156 @@
+/* Github Onelight — 代码（onelight 代码块 + mdmdt 行内代码） */
+
+/* =====================================================================
+ * 代码（代码块 = onelight 白卡片；行内代码 = mdmdt）
+ * ===================================================================== */
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: none;
+    border-top: 1px solid #eef2f2;
+}
+
+.code-tooltip .ty-input {
+    border-color: var(--border-color);
+}
+
+.md-fences .code-tooltip {
+    border-radius: var(--radius-xsmall);
+}
+
+/* ---------------->> 代码块：白色卡片 + 阴影 + 8px 圆角 <<---------------- */
+.md-fences {
+    background-color: var(--code-bg-color);
+    border: 0;
+    border-radius: var(--radius-small);
+    box-shadow: var(--box-shadow);
+    margin: 15px 0 20px;
+    padding: .5em 1em .4em;
+    font-size: .9em;
+    transition: var(--transition);
+}
+
+pre .CodeMirror-gutters {
+    background: transparent;
+    border-color: var(--border-color);
+}
+
+/* 渲染态的图表块（mermaid / flow / sequence）：mdmdt 灰色圆角面板 */
+.md-fences-advanced:not(.md-focus) {
+    box-shadow: none;
+    background: inherit;
+}
+
+.md-diagram .md-diagram-panel {
+    border-radius: var(--radius-small);
+    border-color: transparent !important;
+    background: var(--bg-color2);
+}
+
+pre.md-focus .md-diagram-panel {
+    margin-top: 4px;
+}
+
+/* ---------------->> 代码块右下角语言标签（onelight） <<---------------- */
+pre.md-fences.md-end-block.ty-contain-cm::after {
+    content: attr(lang);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: rgba(51, 51, 51, .5);
+    font-family: var(--monospace);
+    font-size: .75rem;
+    padding: 2px 8px;
+    border-radius: var(--radius-small);
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* ---------------->> 代码行悬停高亮 / 活动行（onelight） <<---------------- */
+.md-fences .CodeMirror-code > :hover {
+    background-color: var(--code-bg-color-light);
+}
+
+.CodeMirror-focused .CodeMirror-activeline-background {
+    background-color: var(--code-bg-color-active);
+}
+
+/* 代码块光标 */
+.CodeMirror div.CodeMirror-cursor {
+    border-left: 1.5px solid var(--main-green);
+}
+
+pre.CodeMirror-line > span {
+    color: var(--text-color);
+}
+
+span.ty-input.ty-input-after.ty-cm-lang-input {
+    color: var(--text-color);
+}
+
+/* ---------------->> 代码配色（onelight；operator / builtin 调深以适配白底） <<---------------- */
+.cm-s-inner .cm-keyword   { color: var(--main-purple); }
+.cm-s-inner .cm-operator  { color: #0184bc; }
+.cm-s-inner .cm-type,
+.cm-s-inner .cm-variable-3 { color: #ea6717; }
+.cm-s-inner .cm-builtin   { color: #c18401; }
+.cm-s-inner .cm-atom      { color: #f78c6c; }
+.cm-s-inner .cm-number    { color: #ff5370; }
+.cm-s-inner .cm-def       { color: #ff8c00; }
+.cm-s-inner .cm-string    { color: #00ad47; }
+.cm-s-inner .cm-string-2  { color: #f07178; }
+.cm-s-inner .cm-comment   { color: #7a8a7f; font-style: italic; }
+.cm-s-inner .cm-variable  { color: #42a5f5; }
+.cm-s-inner .cm-meta      { color: var(--main-red); }
+.cm-s-inner .cm-attribute { color: #e26fff; }
+.cm-s-inner .cm-property,
+.cm-s-inner .cm-qualifier { color: var(--main-red); }
+
+pre[lang=diff] .cm-s-inner .cm-error {
+    border: none;
+    color: inherit;
+    background-color: transparent;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/* ---------------->> 行内代码（mdmdt：蓝色浅底 + 深蓝文字 + 4px 圆角） <<---------------- */
+#write code {
+    background-color: var(--inline-code-bg);
+    color: var(--inline-code-color);
+    font-family: var(--monospace);
+    font-size: .875em;
+    border: 0;
+    border-radius: 4px;
+    margin: 0 1px;
+    padding: 3px 5px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+#write .md-fences code,
+#write pre code {
+    background: transparent;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+
+/* ---------------->> YAML Front Matter <<---------------- */
+#write pre.md-meta-block {
+    padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: var(--bg-color2);
+    border: 0;
+    border-radius: var(--radius-small);
+    color: var(--text-grey);
+    margin-top: 0 !important;
+}

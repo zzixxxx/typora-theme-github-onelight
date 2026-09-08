@@ -1,0 +1,325 @@
+/* Github Onelight — 界面：滚动条 / 菜单 / 按钮 / 输入框 / 底栏 等（mdmdt + github） */
+
+/* =====================================================================
+ * 滚动条（mdmdt：细、圆角）
+ * ===================================================================== */
+::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px !important;
+    background: var(--border-color) !important;
+}
+::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+/* =====================================================================
+ * 界面圆角（mdmdt：菜单 / 按钮 / 输入框 / 快速打开 / 底栏 / 提示）
+ * ===================================================================== */
+/* 按钮 */
+.btn,
+.btn-default,
+.long-btn {
+    border-radius: var(--radius-xsmall) !important;
+    outline: none !important;
+}
+
+.btn-primary {
+    background: var(--color-1) !important;
+    border-color: var(--color-1) !important;
+    color: #fff;
+}
+
+.btn:hover,
+.long-btn:hover {
+    border-color: var(--color-1) !important;
+    color: var(--color-1);
+}
+
+.btn:focus,
+.long-btn:focus {
+    outline: none !important;
+}
+
+/* 输入框 / 下拉 */
+html input,
+input {
+    border-radius: var(--radius-xsmall) !important;
+    outline: none !important;
+}
+
+html input:focus,
+html textarea:focus,
+html input[type="number"]:focus,
+html input[type="search"]:focus,
+html input[type="text"]:focus {
+    border-color: var(--color-1) !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+select {
+    border-radius: 6px !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+textarea {
+    outline: none;
+    border-radius: var(--radius-small);
+    border-color: var(--border-color);
+}
+
+/* 下拉菜单 */
+.dropdown-menu {
+    margin-top: 4px;
+    padding: 8px !important;
+    border-radius: var(--radius-small) !important;
+    border: 1px solid var(--border-color);
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+#recent-file-panel-search-input,
+.megamenu-menu-panel .btn,
+.dropdown-menu li a,
+.dropdown-menu li:hover {
+    border-radius: var(--radius-xsmall) !important;
+}
+
+.dropdown-menu li:hover > a,
+.dropdown-menu li > span > a:hover,
+#sidebar-files-menu li:hover > a,
+#close-sidebar-menu-btn:hover {
+    background: var(--bg-color2) !important;
+    color: var(--color-1) !important;
+}
+
+.dropdown-menu li.file-action-item,
+.dropdown-menu li.file-sort-item,
+.dropdown-menu li.file-sort-item + li {
+    margin-top: 0;
+    border-radius: 0 !important;
+}
+
+/* 右键菜单 */
+.context-menu {
+    padding: 6px !important;
+    border-radius: 6px !important;
+    border: 1px solid var(--border-color);
+}
+
+.ext-context-menu {
+    margin: -4px 1px 0 1px;
+}
+
+.context-menu li a {
+    display: inline-block;
+    width: 100%;
+    border-radius: 6px !important;
+}
+
+.context-menu > .active a {
+    color: var(--color-1) !important;
+}
+
+/* 快速打开 */
+#typora-quick-open {
+    padding: 12px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-small);
+}
+
+.typora-quick-open-item,
+.md-hover-tip .code-tooltip-content {
+    border-radius: var(--radius-xsmall);
+    overflow-x: auto;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/* 悬停提示 */
+#ty-tooltip,
+.ty-tooltip.shown {
+    padding: 6px 12px;
+    background: var(--bg-color2);
+    border-radius: 6px;
+    color: var(--text-color);
+}
+
+.code-tooltip.md-hover-tip,
+.md-hover-tip .code-tooltip-content,
+.md-arrow::after {
+    border-bottom-color: var(--color-1) !important;
+    background: var(--color-1) !important;
+    box-shadow: 0 1px 4px var(--color-1) !important;
+}
+
+.md-hover-tip .code-tooltip-content:hover a {
+    color: var(--color-2) !important;
+}
+
+/* 弹窗 */
+.modal-content {
+    padding: 8px;
+    border-radius: var(--radius-small);
+}
+
+.modal-dialog,
+.modal-title,
+#md-searchpanel input,
+#md-replace-type-label,
+#search-panel-replace-btn {
+    border-radius: var(--radius-xsmall);
+}
+
+/* 底栏 */
+footer.ty-footer,
+.ty-footer .footer-item {
+    height: 24px;
+    border-top: none;
+}
+
+.ty-footer .footer-item {
+    margin-left: 3px;
+    margin-top: -5px;
+    border-radius: var(--radius-xsmall);
+    background: var(--border-color) !important;
+    line-height: 24px;
+}
+
+.ty-footer #footer-word-count {
+    margin-right: -2px;
+}
+
+#footer-word-count-info {
+    padding: 6px;
+    border-radius: var(--radius-xsmall);
+    border: 1px solid var(--border-color);
+}
+
+#footer-word-count-info table {
+    border-radius: 0;
+}
+
+/* 搜索命中 */
+.md-search-hit {
+    background: var(--color-2-0-c) !important;
+    color: #070909 !important;
+}
+
+.md-search-select {
+    background: var(--color-2) !important;
+    color: #070909 !important;
+}
+
+/* 主题预览卡片 */
+.theme-preview-div {
+    margin: 0 20px 20px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 5px;
+    border: 3px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--color-1);
+}
+
+.theme-preview-content {
+    border-radius: 6px;
+}
+
+.theme-preview-div:hover {
+    border-color: var(--color-2);
+}
+
+.theme-preview-div.active {
+    border-color: var(--color-1);
+}
+
+/* 偏好设置窗口（github） */
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.nav-group-item {
+    border-radius: 6px !important;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient(180deg, hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0));
+}
+
+#md-notification .btn {
+    border: 0;
+}
+
+header, .context-menu, .megamenu-content, footer {
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.mac-os #write {
+    caret-color: AccentColor;
+}
+
+/* =====================================================================
+ * 其余（github）
+ * ===================================================================== */
+#write > h3.md-focus:before {
+    left: -1.5625rem;
+    top: .375rem;
+}
+#write > h4.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+#write > h5.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+#write > h6.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+    .md-fences,
+    #write blockquote,
+    #write .md-alert {
+        box-shadow: none;
+    }
+    table,
+    pre,
+    img,
+    blockquote,
+    .md-alert {
+        page-break-inside: avoid;
+    }
+}

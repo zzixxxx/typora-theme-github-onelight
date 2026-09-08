@@ -3,7 +3,7 @@
  * ---------------------------------------------------------------------
  * 在 Github Onelight 的基础上启用编辑区底部插画（《绝区零》蕾米埃尔壁纸，版权见 THIRD_PARTY_NOTICES）。
  * 依赖：同目录下的 github-onelight.css 与 github-onelight/ 资源目录，样式改动自动跟随。
- * 资源目录：./github-onelight-leimi/
+ * 插画文件：./github-onelight/img/bg-art.jpg
  * Typora 菜单里显示为「Github Onelight Leimi」，可与「Github Onelight」随时切换。
  * ===================================================================== */
 @import url("./github-onelight.css");
@@ -18,9 +18,9 @@
  * 插画路径直接写在这里而不是放进 CSS 变量，避免不同 Chromium 版本对变量里相对路径的解析差异。 */
 content {
     background-image:
-        url('./github-onelight/mutou2.gif'),
+        url('./github-onelight/img/mutou2.gif'),
         linear-gradient(to bottom, #fff 0%, var(--bg-art-veil) 28%, var(--bg-art-veil) 100%),
-        url('./github-onelight-leimi/bg-art.jpg');
+        url('./github-onelight/img/bg-art.jpg');
     background-position: 100% 100%, 50% 100%, 50% 100%;
     background-repeat: no-repeat, no-repeat, no-repeat;
     background-size:

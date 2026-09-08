@@ -7,7 +7,7 @@
 | 主题菜单名 | 文件 | 说明 |
 | ---------- | ---- | ---- |
 | Github Onelight | `github-onelight.css` + `github-onelight/` | 主题本体 |
-| Github Onelight Leimi | `github-onelight-leimi.css` + `github-onelight-leimi/` | `@import` 本体，再在编辑区底部铺一张《绝区零》蕾米埃尔插画；样式改动自动跟随本体 |
+| Github Onelight Leimi | `github-onelight-leimi.css` | `@import` 本体，再在编辑区底部铺一张《绝区零》蕾米埃尔插画（图在 `github-onelight/img/`）；样式改动自动跟随本体 |
 
 ## 各部分来源
 
@@ -27,6 +27,10 @@
 
 ## 安装
 
+**方式零：下载 Release（推荐）**
+
+到 [Releases](https://github.com/zzixxxx/typora-theme-github-onelight/releases) 下载最新的 `github-onelight-vX.Y.Z.zip`，解压后把里面的 `github-onelight.css`、`github-onelight-leimi.css`、`github-onelight/` 放进 Typora 主题目录（`偏好设置 → 外观 → 打开主题文件夹`），重启 Typora 即可。
+
 **方式一：脚本（Windows）**
 
 ```powershell
@@ -38,10 +42,33 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 **方式二：手动**
 
 1. 在 Typora 中打开 `偏好设置 → 外观 → 打开主题文件夹`。
-2. 把 `github-onelight.css`、`github-onelight/` 复制进去；想要带插画的版本，再把 `github-onelight-leimi.css`、`github-onelight-leimi/` 一起复制进去。
+2. 把 `github-onelight.css`、`github-onelight-leimi.css` 和整个 `github-onelight/` 文件夹复制进去（不要 Leimi 版就不复制它的 css）。
 3. 重启 Typora，菜单 `主题 → Github Onelight` 或 `Github Onelight Leimi`。
 
 主题自包含，不依赖 onelight / mdmdt / phycat 本体。Leimi 版依赖同目录下的本体文件。
+
+## 目录结构
+
+```
+github-onelight.css          入口：@import 各模块 + :root 变量
+github-onelight-leimi.css    叠加：@import 本体 + 编辑区底部插画
+github-onelight/
+├─ fonts/                    Open Sans ×4、JetBrains Mono
+├─ img/                      mutou.gif / mutou2.gif（小人）、bg-art.jpg（Leimi 插画）
+└─ style/
+   ├─ font.css               字体声明与等宽字体应用
+   ├─ base.css               正文骨架：页面宽度、标题、列表、hr（github）
+   ├─ text.css               粗体 / 下划线 / 删除线 / 高亮 / 链接图标 / kbd / 选区 / 复选框（mdmdt）
+   ├─ blockquote.css         引用块与五种警告框（onelight）
+   ├─ table.css              表格圆角卡片 + 斑马纹（mdmdt）+ 悬停高亮（onelight）
+   ├─ code.css               代码块白卡片 / 行悬停 / 语言标签（onelight）+ 行内代码（mdmdt）
+   ├─ math.css               数学公式块 / HTML 块（mdmdt）
+   ├─ image.css              图片样式（phycat）+ 点击放大灯箱
+   ├─ background.css         编辑区背景：小人 gif + 可选插画机制（onelight）
+   ├─ sidebar.css            侧栏大纲 / 文件列表 / 文件树（mdmdt）
+   ├─ toc.css                [TOC] 目录（mdmdt）
+   └─ ui.css                 滚动条、菜单、按钮、输入框、快速打开、底栏等界面圆角（mdmdt + github）
+```
 
 ## 示例文档
 
@@ -62,9 +89,9 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 ## 图片点击放大的说明
 
 - 点击图片：图片在窗口正中放大到最多 92vw × 92vh，背景压暗。
-- 关闭：点击遮罩下的文字或空白处（光标离开这张图即关闭）。点击遮罩下的另一张图片会切换到它；点击放大图本身不做任何事。
+- 关闭：点击任意位置（遮罩、放大图本身都可以）。打开期间点不到其他图片，要先关闭再打开下一张。
 - 原理：利用 Typora 点击图片时给 `.md-image` 加 `.md-expand` 的机制，把 img 改为 `position: fixed` 居中；Typora 给 `#write` 设置了 `transform: translateZ(0)`，展开期间会临时取消。
-- 放大时用 `contain-intrinsic-size: auto` + `contain: size` 保住图片原来的占位，版面不回流，否则关闭时的点击会落到顶上来的下一张图。
+- 关闭的实现：Typora 每次光标变化都会重算 `.md-expand`，所以在放大图相邻的文字块上挂一个透明的全屏点击捕获层，点击后光标落到那段文字开头，灯箱随之关闭，且不会碰到其他图片。前后相邻块都是图片时没有捕获层，此时点击会穿透到遮罩下的内容。
 - 已兼容 `偏好设置 → 段落首行缩进`（Typora 在该模式下有一条高特异性规则会覆盖图片定位，主题里用 `!important` 压过）。
 - 用键盘把光标移进图片时也会触发放大，这是该机制的副作用。
 
@@ -100,16 +127,16 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 
 content {
     background-image:
-        url('./github-onelight/mutou2.gif'),
+        url('./github-onelight/img/mutou2.gif'),
         linear-gradient(to bottom, #fff 0%, var(--bg-art-veil) 28%, var(--bg-art-veil) 100%),
-        url('./github-onelight-xxx/bg-art.jpg');   /* 你的图片 */
+        url('./github-onelight/img/xxx.jpg');   /* 你的图片，放进 github-onelight/img/ */
     background-position: 100% 100%, 50% 100%, 50% 100%;
     background-repeat: no-repeat, no-repeat, no-repeat;
     background-size: 150px auto, 100% calc(var(--bg-art-width) * var(--bg-art-ratio)), var(--bg-art-width) auto;
 }
 ```
 
-也可以直接改本文件 `content` 上方 `:root` 里的 `--bg-art`，其余变量：
+也可以直接改 `github-onelight/style/background.css` 里 `:root` 的 `--bg-art`，其余变量：
 
 | 变量 | 默认值 | 作用 |
 | ---- | ------ | ---- |
@@ -120,7 +147,7 @@ content {
 
 Leimi 版的插画为《绝区零》官方壁纸，版权归 miHoYo / HoYoverse，仅供个人使用，详见 THIRD_PARTY_NOTICES。自换插画请注意版权。
 
-不想要右下角动图：删掉 `content { ... }` 里 `mutou2.gif` 那一层和 `div#megamenu-section-open { ... }` 即可。
+不想要右下角动图：在 `github-onelight/style/background.css` 里删掉 `content { ... }` 的 `mutou2.gif` 那一层和 `div#megamenu-section-open { ... }` 即可。
 
 ## 环境
 

@@ -1,0 +1,126 @@
+/* Github Onelight — 图片（phycat）+ 点击放大灯箱 */
+
+/* =====================================================================
+ * 图片（phycat 风格：居中 + 12px 圆角 + 悬停放大）+ 点击放大灯箱
+ * ===================================================================== */
+/* 含图片的段落整体居中（phycat） */
+#write p:has(img) {
+    text-align: center;
+}
+
+#write img {
+    border-radius: var(--radius-large);
+    display: inline-block;
+    margin: 15px 5px;
+    object-fit: contain;
+    max-width: 100%;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .05);
+    filter: brightness(1) contrast(1);
+    cursor: zoom-in;
+    /* 只过渡 transform / 阴影 / 滤镜，避免灯箱开合时尺寸类属性被动画拉扯 */
+    transition: transform .4s cubic-bezier(.34, 1.56, .64, 1), box-shadow .4s ease, filter .3s ease;
+}
+
+/* 导出 HTML 中图片不带 .md-image 外壳时也居中 */
+#write p > img:only-child {
+    display: block;
+    margin: 20px auto;
+}
+
+#write img:hover {
+    filter: brightness(1.05) contrast(1.05);
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px -4px color-mix(in srgb, var(--theme-color) 25%, transparent);
+    z-index: 10;
+}
+
+/* 图片源码（![alt](src)）的元信息 */
+.md-image > .md-meta {
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+/* ---------------->> 点击图片放大 <<----------------
+ * 原理：点击图片后 Typora 给 .md-image 加上 .md-expand（光标进入图片源码时也会加），
+ *       此时把 img 改为 fixed 定位、inset:0 + margin:auto 居中，
+ *       用 .md-image::before 铺一层全屏压暗遮罩。
+ * 关闭：Typora 每次光标变化都会先清空所有 .md-expand，再给光标所在元素加回去，
+ *       所以"关闭"= 让光标落进一段不是图片的文字。做法是在放大图所在块的相邻文字块
+ *       （后一个优先，其次前一个）上挂一个透明的全屏"点击捕获层"伪元素：点击落在它上面时，
+ *       浏览器会把光标放到该文字块开头 —— 灯箱关闭，且永远碰不到其他图片。
+ *       在 Chromium 里实测：点遮罩、点放大图、点下一张图所在位置、点角落，光标都落到相邻文字块开头。
+ * 注意 1：Typora 给 #write 设置了 transform: translateZ(0)，会让 fixed 相对 #write 定位，
+ *         因此在展开期间临时取消该 transform。
+ * 注意 2：开启"首行缩进"时 Typora 有条高特异性规则
+ *         #write.first-line-indent p>.md-image:only-child img { position: relative; left: -2em }
+ *         会覆盖普通声明，所以定位相关属性一律加 !important。
+ * 注意 3：:has() 不能嵌套 :has()，否则整条规则作废；相邻块选择器用 :has(+ * > …) 写法绕开。
+ * 边界：前后相邻块都是图片（或没有相邻块）时没有捕获层，此时点击会穿透到遮罩下的内容，
+ *       落到文字即关闭，落到另一张图会切换过去。
+ */
+#write:has(.md-image.md-img-loaded.md-expand > img) {
+    transform: none !important;
+}
+
+/* 压暗遮罩：挂在放大图自身上，点击穿透 */
+#write .md-image.md-img-loaded.md-expand::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: var(--lightbox-backdrop);
+    z-index: 9997;
+    pointer-events: none;
+    animation: gh-ol-backdrop-in .18s ease-out;
+}
+
+/* 点击捕获层：透明、全屏，挂在放大图所在块的后一个 / 前一个非图片块上 */
+#write :has(> .md-image.md-img-loaded.md-expand) + :not(:has(.md-image))::before,
+#write :not(:has(.md-image)):has(+ * > .md-image.md-img-loaded.md-expand)::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 9998;
+    pointer-events: auto;
+    cursor: zoom-out;
+}
+
+/* 仅对加载成功的图片生效，加载失败的占位图不进灯箱 */
+#write .md-image.md-img-loaded.md-expand > img {
+    position: fixed !important;
+    inset: 0 !important;
+    margin: auto !important;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: var(--lightbox-max-width) !important;
+    max-height: var(--lightbox-max-height) !important;
+    zoom: 1 !important;
+    transform: none;
+    border: 0;
+    border-radius: 6px;
+    filter: none;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
+    z-index: 9999 !important;
+    pointer-events: none;   /* 穿透到下面的点击捕获层 → 关闭 */
+    transition: none;
+    animation: gh-ol-lightbox-in .18s ease-out;
+}
+
+@keyframes gh-ol-lightbox-in {
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes gh-ol-backdrop-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

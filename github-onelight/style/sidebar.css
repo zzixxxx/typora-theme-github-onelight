@@ -1,0 +1,577 @@
+/* Github Onelight — 侧栏：大纲 / 文件列表 / 文件树（mdmdt） */
+
+/* =====================================================================
+ * 侧栏：大纲（mdmdt 树形连线）
+ * ===================================================================== */
+#typora-sidebar {
+    border-right-color: var(--border-color);
+}
+
+.os-windows #sidebar-content {
+    margin-top: -1px;
+    border-top: 1px solid var(--border-color);
+}
+
+.os-windows .ty-show-outline-filter #sidebar-content .sidebar-content-content {
+    margin-top: -4px;
+}
+
+.os-windows .ty-show-search #sidebar-content .sidebar-content-content {
+    margin-top: -7px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+    padding: 0 2px;
+}
+
+.ty-show-search #info-panel-tab-search .info-panel-tab-border,
+.active-tab-files #info-panel-tab-file .info-panel-tab-border,
+.active-tab-outline #info-panel-tab-outline .info-panel-tab-border {
+    height: 3px;
+    border-radius: 2px;
+    background-color: var(--color-1);
+}
+
+.outline-content {
+    overflow: auto !important;
+    padding: 14px 14px 14px 17px;
+    font-size: 14px !important;
+}
+
+.os-windows .outline-content {
+    padding-top: 15px;
+}
+
+.outline-content li {
+    position: relative;
+    z-index: 30;
+}
+
+.outline-content > li:first-of-type::before {
+    top: 0;
+}
+
+.outline-content li ul {
+    position: relative;
+    z-index: 48;
+    margin-left: 18px;
+    margin-top: 0 !important;
+}
+
+.no-collapse-outline .outline-content li ul {
+    margin-left: 21px;
+}
+
+.outline-content li .outline-item {
+    position: relative;
+    z-index: 50;
+    margin: 0 0 3px 7px;
+    width: calc(100% - 4px);
+    border-radius: 5px;
+    border: none;
+    line-height: 1;
+    padding: 0 0 0 4px;
+}
+
+.outline-item > .outline-expander {
+    display: block;
+    float: left;
+    width: auto;
+    height: 0;
+    background: transparent;
+    padding-left: 0;
+}
+
+.outline-item > .outline-expander:before {
+    margin-top: 10px;
+    margin-left: -2px;
+    background: transparent;
+    padding: 0 4px 0 2px;
+    font-size: 10px;
+}
+
+.outline-content li .outline-label {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 7px 7px 7px 8px;
+    font-size: 14px !important;
+    line-height: 1.2;
+    overflow-wrap: normal;
+    word-wrap: normal;
+    word-break: keep-all;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.outline-content .outline-item code {
+    font-size: 11px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+
+.outline-item-single .outline-label,
+.outline-item-single.outline-item-open .outline-label,
+.no-collapse-outline .outline-content li .outline-label {
+    padding-left: 0 !important;
+}
+
+.outline-item > .outline-expander:hover + .outline-label,
+.outline-item-open > .outline-item > .outline-label {
+    padding-left: 11px;
+}
+
+.no-collapse-outline .outline-item-open > .outline-item > .outline-label {
+    padding-left: 0 !important;
+}
+
+.outline-item-active > .outline-expander:hover + .outline-label,
+.outline-item-open > .outline-item-active > .outline-label {
+    padding-left: 12px;
+}
+
+.outline-item-active > .outline-expander,
+.outline-item-active > .outline-label {
+    font-weight: 900;
+}
+
+/* 树形连线 */
+.outline-content li .outline-item::before {
+    content: '';
+    position: absolute;
+    z-index: 38;
+    left: -10px;
+    top: -27.5px;
+    width: 10px;
+    height: calc(50% + 28px);
+    background: transparent;
+    border-left: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.os-windows .outline-content li .outline-item::before {
+    top: -28.5px;
+}
+
+.outline-content > li:first-of-type > .outline-item::before {
+    top: calc(50% - 1px);
+    height: calc(50% + 15px);
+    border-left: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
+    border-bottom: none;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 0;
+}
+
+.outline-children > li:first-child > .outline-item::before,
+.outline-content > li:nth-child(2) > .outline-item::before {
+    top: -11px;
+    height: calc(50% + 12px);
+}
+
+.os-windows .outline-children > li:first-child > .outline-item::before,
+.os-windows .outline-content > li:nth-child(2) > .outline-item::before {
+    top: -13px;
+    height: calc(50% + 13px);
+}
+
+.no-collapse-outline .outline-children > li:first-child > .outline-item::before,
+.no-collapse-outline .outline-content > li:nth-child(2) > .outline-item::before {
+    top: -8px;
+    height: calc(50% + 8px);
+}
+
+.outline-content > li:last-child > .outline-item::before,
+.outline-children > li:last-child > .outline-item::before {
+    border-bottom-left-radius: 3px;
+}
+
+.no-collapse-outline .outline-item-wrapper > .outline-children::before,
+.outline-item-open > .outline-children::before {
+    content: '';
+    position: absolute;
+    left: -21px;
+    top: -26px;
+    width: 1px;
+    height: calc(100% + 12px);
+    background: transparent;
+    border-left: 1px solid var(--border-color);
+}
+
+.no-collapse-outline .outline-item-wrapper > .outline-children::before {
+    left: -24px;
+}
+
+.no-collapse-outline .outline-content > li.outline-item-wrapper:first-child > .outline-children::before,
+.outline-content > li.outline-item-open:first-child > .outline-children::before {
+    top: -15px;
+}
+
+.outline-content > li:only-of-type > .outline-item::before,
+.no-collapse-outline .outline-item-wrapper:last-of-type > .outline-children::before,
+.no-collapse-outline .outline-children > li.outline-item-wrapper:last-child > .outline-children::before,
+.outline-item-open:last-of-type > .outline-children::before,
+.outline-children > li.outline-item-open:last-child > .outline-children::before {
+    display: none;
+}
+
+.outline-content > li:only-of-type {
+    margin-left: -8px;
+}
+
+li > .outline-item-active:before,
+.outline-item:hover::before,
+.outline-item-active > .outline-item::before {
+    width: 7px !important;
+}
+
+li > .outline-item-active,
+li > .outline-item:hover,
+.outline-item-active > .outline-item {
+    margin-left: 4px !important;
+    padding-left: 7px !important;
+}
+
+li > .outline-item-active::before,
+li > .outline-item:hover::before,
+.outline-item-active > .outline-item::before {
+    left: -7px !important;
+}
+
+.outline-item:hover,
+.outline-item:hover > .outline-label,
+.outline-item-active,
+.outline-item-active > .outline-label {
+    background: var(--bg-color2) !important;
+}
+
+.outline-item-active > .outline-label,
+.outline-item-active > .outline-expander::before {
+    color: var(--color-1);
+}
+
+.ty-on-outline-filter .outline-content .outline-item::before,
+.ty-on-outline-filter .outline-content .outline-item::after {
+    display: none;
+}
+
+.ty-on-outline-filter .outline-content > li > ul,
+.ty-on-outline-filter .outline-content .outline-item {
+    margin-left: 0;
+}
+
+/* 大纲筛选结果 */
+.outline-content:has(.ty-outline-hit) {
+    padding-left: 14px;
+}
+
+.outline-content li:has(.ty-outline-hit) *::before,
+.outline-content li:has(.ty-outline-hit) *::after {
+    content: '';
+    display: none;
+}
+
+.outline-content li:has(.ty-outline-hit) .outline-item {
+    margin-left: 1px !important;
+    width: calc(100% - 1px);
+    padding-left: 0 !important;
+}
+
+.outline-content li:has(.ty-outline-hit) .outline-item > .outline-label {
+    padding: 8px 10px !important;
+}
+
+.ty-on-outline-filter .ty-outline-hit {
+    color: var(--color-2);
+}
+
+#outline-btn:hover {
+    color: var(--color-1) !important;
+}
+
+/* =====================================================================
+ * 侧栏：文件列表 / 搜索结果（mdmdt）
+ * ===================================================================== */
+#file-library-list,
+#file-library-search-result {
+    padding: 14px;
+}
+
+#file-library-list .file-list-item,
+#file-library-search-result .ty-search-item {
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    border-bottom-color: var(--border-color);
+}
+
+#file-library-list .file-list-item {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+#file-library-list .file-list-item.active,
+#file-library-search-result .ty-search-item.active {
+    border-radius: 5px;
+    border: 1px solid var(--color-1);
+}
+
+#file-library-list .file-list-item.active {
+    padding: 6px 12px;
+}
+
+#file-library-search-result .ty-search-item.active {
+    padding: 6px 12px 6px 0;
+}
+
+#file-library-list .file-list-item:first-of-type.active,
+#file-library-search-result .ty-search-item:first-of-type.active {
+    margin-top: 0;
+}
+
+#file-library-list .file-list-item:hover,
+#file-library-search-result .ty-search-item:hover {
+    border-radius: 5px;
+    background: var(--bg-color2);
+    border-color: var(--border-color);
+}
+
+#file-library-list .file-list-item:hover {
+    color: var(--color-1);
+}
+
+#file-library-list .file-list-item:hover + .file-list-item:not(.active),
+#file-library-list .file-list-item.active + .file-list-item:not(.active),
+#file-library-search-result .ty-search-item:hover + .ty-search-item:not(.active),
+#file-library-search-result .ty-search-item.active + .ty-search-item:not(.active) {
+    border-top: 1px solid var(--border-color);
+}
+
+#file-library-list .file-list-item.active:hover,
+#file-library-search-result .ty-search-item.active:hover {
+    border-color: var(--color-1);
+}
+
+#file-library-search-result .ty-search-item.active {
+    color: var(--text-color);
+}
+
+#file-library-search-result .ty-search-item.active .ty-search-item-line {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.file-list-item-time {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.file-list-item-count {
+    margin-right: 0;
+    border-radius: 3px;
+    padding: 0 6px;
+}
+
+#file-library-search-result .ty-search-item.active .file-list-item-count {
+    padding-right: 0;
+}
+
+#sidebar-loading-template {
+    display: none;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.ty-file-search-match-text {
+    background-color: var(--color-2-0-c);
+}
+
+/* 侧栏搜索框 */
+.ty-sidebar-search-panel {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+}
+
+#file-library-search-panel {
+    padding-top: 3px;
+    padding-bottom: 11px;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+#file-library-search-input,
+.native-window #file-library-search-input {
+    top: 4px;
+    width: 100% !important;
+    height: 28px;
+    border-radius: 5px !important;
+    font-size: 12px;
+}
+
+#ty-sidebar-search-panel .searchpanel-search-option-btn,
+#sidebar-content #file-library-search-panel .searchpanel-search-option-btn {
+    top: 12px;
+}
+
+#close-outline-filter-btn {
+    top: 12px;
+    right: 15px;
+    border: none !important;
+    background: transparent !important;
+}
+
+/* =====================================================================
+ * 侧栏：文件树（mdmdt 树形连线）
+ * ===================================================================== */
+#file-library-tree {
+    box-sizing: border-box;
+    padding-top: 8px;
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+.file-node-root {
+    position: relative;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
+.file-tree-node {
+    margin-bottom: 1px;
+}
+
+.file-node-children {
+    margin-left: 12px;
+}
+
+.file-node-root > .file-node-children {
+    margin-left: -2px;
+}
+
+.file-tree-node > .file-node-content > .file-node-open-state + .file-node-icon {
+    margin-left: 4px;
+}
+
+.file-node-expanded > .file-node-content > .file-node-open-state + .file-node-icon,
+.file-node-collapsed > .file-node-content > .file-node-open-state + .file-node-icon {
+    margin-left: 3px;
+}
+
+.fa-folder:before,
+.fa-folder:after,
+.fa-caret-right,
+.fa-caret-down {
+    color: var(--text-grey);
+}
+
+.file-node-content .file-node-open-state {
+    position: relative;
+    padding-left: 3px;
+}
+
+.file-node-expanded .file-node-content .file-node-open-state {
+    padding-left: 3px;
+}
+
+.file-node-content .file-node-open-state::after {
+    content: "";
+    position: absolute;
+    z-index: 20;
+    left: 0;
+    top: -21px;
+    width: 8px;
+    height: 32px;
+    border-left: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    background: transparent;
+}
+
+.file-node-expanded > .file-node-content .file-node-open-state::after {
+    left: -12px;
+    top: -21px;
+    width: 7px;
+}
+
+.file-node-root > .file-node-content .file-node-open-state::after {
+    display: none;
+}
+
+.file-tree-node:first-child > .file-node-content .file-node-open-state::after {
+    top: -11px;
+    height: 22px;
+}
+
+.file-node-expanded:first-child > .file-node-content .file-node-open-state::after {
+    top: -11px;
+}
+
+.file-tree-node:last-child > .file-node-content .file-node-open-state::after {
+    border-bottom-left-radius: 3px;
+}
+
+.file-node-collapsed > .file-node-content .fa-caret-right {
+    margin-left: 9px;
+}
+
+.file-node-expanded {
+    margin-left: 8px;
+    border-left: 1px solid var(--border-color);
+}
+
+.file-tree-node:last-child {
+    border-left-color: transparent;
+}
+
+.file-node-expanded > .file-node-content {
+    margin-left: 3px;
+}
+
+.file-node-root > .file-node-content {
+    margin-left: 0;
+}
+
+.file-node-content {
+    position: relative;
+    padding-top: 3px;
+}
+
+.file-node-content::after {
+    content: '';
+    display: none;
+    position: absolute;
+    z-index: -1;
+    left: 6px;
+    top: 0;
+    width: calc(100% - 10px);
+    height: 29px;
+    background: var(--bg-color2);
+    border-radius: 5px;
+}
+
+.file-library-file-node:hover > .file-node-content::after,
+.file-tree-node.active > .file-node-content::after {
+    display: block;
+}
+
+.file-library-file-node:hover > .file-node-content > .file-node-open-state:after,
+.file-tree-node.active > .file-node-content > .file-node-open-state:after {
+    width: 6px;
+}
+
+.file-node-background {
+    display: none !important;
+}
+
+.file-library-node:not(.file-node-root):focus > .file-node-content {
+    outline: none;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state {
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}

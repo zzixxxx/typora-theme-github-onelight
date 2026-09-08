@@ -1,0 +1,131 @@
+/* Github Onelight — 表格（mdmdt + onelight 悬停） */
+
+/* =====================================================================
+ * 表格（mdmdt：8px 圆角卡片 + 斑马纹；悬停高亮沿用 onelight）
+ * ===================================================================== */
+#write table,
+#write figure {
+    width: 100%;
+    margin-bottom: 0;
+    border-radius: var(--radius-small);
+    padding: 0 !important;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#write figure {
+    margin-top: 16px !important;
+}
+
+#write table {
+    margin-top: 0;
+    border: 1px solid var(--border-color) !important;
+    overflow: hidden;
+    word-break: initial;
+}
+
+#write table thead tr th {
+    background: var(--bg-color2);
+    font-weight: 700;
+}
+
+#write table tbody tr:nth-child(even) td {
+    background: var(--bg-color2);
+}
+
+#write table tbody tr:nth-child(odd) td {
+    background: #fff;
+}
+
+#write table tr th,
+#write table tr td {
+    padding: 10px !important;
+    white-space: pre-wrap !important;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+
+#write table tr td,
+#write table thead tr th {
+    border-left: 1px solid var(--border-color) !important;
+}
+
+#write table tbody tr td:first-of-type,
+#write table thead tr th:first-of-type {
+    border-left: none !important;
+}
+
+/* 悬停：整行浅色，当前单元格更深（onelight 的"选中行"效果） */
+#write table tbody tr:hover td {
+    background: var(--tb-row-hover-bg);
+}
+
+#write table tbody tr td:hover {
+    background: var(--tb-cell-hover-bg);
+}
+
+/* 插入表格时的行列选择网格：不受上面规则影响 */
+.md-grid-board-wrap table {
+    border: none !important;
+    border-radius: 0;
+}
+
+.md-grid-board-wrap table tr th,
+.md-grid-board-wrap table tr td {
+    padding: 0 !important;
+}
+
+#md-grid-width,
+#md-grid-height {
+    text-align: center !important;
+    padding: 1px 0;
+}
+
+button#md-resize-grid {
+    display: block !important;
+    width: 100%;
+    margin: 5px auto 0;
+}
+
+.md-table-resize-popover .md-reset > a::before {
+    display: none !important;
+}
+
+.popover.bottom.md-table-resize-popover {
+    width: fit-content;
+}
+
+#write td.md-reset {
+    border: 0;
+    padding: 0 !important;
+}
+
+.md-grid-board a {
+    border: 0;
+}
+
+tr.md-reset {
+    background: var(--theme-light-color) !important;
+}
+
+td.md-reset.md-grid-ext > a {
+    margin: 0;
+    padding: 0;
+}
+
+/* 表格编辑浮层（onelight 云母） */
+.ty-table-edit {
+    margin-left: 0;
+    border-radius: var(--radius-xsmall);
+    background-color: var(--mica-bg) !important;
+    backdrop-filter: var(--mica-blur);
+    -webkit-backdrop-filter: var(--mica-blur);
+    border: var(--mica-border);
+    box-shadow: var(--box-shadow);
+    transition: var(--mica-transition);
+    z-index: 999;
+}
+
+.ty-delete:before {
+    color: var(--main-red);
+}

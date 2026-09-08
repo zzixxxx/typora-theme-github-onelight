@@ -14,18 +14,15 @@ if (-not (Test-Path $dst)) {
     exit 1
 }
 
-# 主题本体
+# 主题本体：github-onelight.css + github-onelight/（fonts / img / style）
 Copy-Item -Path (Join-Path $src 'github-onelight.css') -Destination $dst -Force
 $assetDst = Join-Path $dst 'github-onelight'
-if (-not (Test-Path $assetDst)) { New-Item -ItemType Directory -Path $assetDst | Out-Null }
-Copy-Item -Path (Join-Path $src 'github-onelight\*') -Destination $assetDst -Force
+if (Test-Path $assetDst) { Remove-Item -Path $assetDst -Recurse -Force }
+Copy-Item -Path (Join-Path $src 'github-onelight') -Destination $assetDst -Recurse -Force
 
-# Leimi 叠加版（带插画）；不需要的话加 -SkipLeimi
+# Leimi 叠加版（带插画，只多一个 css，插画已在 github-onelight/img 里）
 if (-not $SkipLeimi) {
     Copy-Item -Path (Join-Path $src 'github-onelight-leimi.css') -Destination $dst -Force
-    $leimiDst = Join-Path $dst 'github-onelight-leimi'
-    if (-not (Test-Path $leimiDst)) { New-Item -ItemType Directory -Path $leimiDst | Out-Null }
-    Copy-Item -Path (Join-Path $src 'github-onelight-leimi\*') -Destination $leimiDst -Force
 }
 
 Write-Host "已安装到：$dst" -ForegroundColor Green

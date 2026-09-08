@@ -6,15 +6,15 @@
 
 - 来源：Typora 安装包自带 `themes/github.css`
 - 用途：页面骨架（正文字体、标题、列表、页面宽度、部分界面样式）
-- 附带资源：`github-onelight/open-sans-*.woff2`（Open Sans 字体，Apache License 2.0 / SIL OFL 1.1，随 Typora 分发）
+- 附带资源：`github-onelight/fonts/open-sans-*.woff2`（Open Sans 字体，Apache License 2.0 / SIL OFL 1.1，随 Typora 分发）
 
 ## onelight（caolib/typora-onelight-theme）
 
 - 来源：https://github.com/caolib/typora-onelight-theme
 - 用途：代码块卡片与代码行悬停、语言标签、引用块与 GitHub 警告框、表格悬停高亮、界面背景动图
 - 附带资源：
-  - `github-onelight/JetBrainsMono-Regular.woff2` — JetBrains Mono，SIL Open Font License 1.1，© 2020 The JetBrains Mono Project Authors
-  - `github-onelight/mutou.gif`、`github-onelight/mutou2.gif` — 取自该主题的 `img/` 目录
+  - `github-onelight/fonts/JetBrainsMono-Regular.woff2` — JetBrains Mono，SIL Open Font License 1.1，© 2020 The JetBrains Mono Project Authors
+  - `github-onelight/img/mutou.gif`、`github-onelight/img/mutou2.gif` — 取自该主题的 `img/` 目录
 - 许可：以原仓库声明为准
 
 ## Mdmdt（cayxc/Mdmdt）
@@ -28,7 +28,7 @@
 
   移植时的修改：颜色改为本主题变量、字号由 px 改为 em、去掉了与 github 骨架冲突的段落间距与字体设置、表格增加悬停高亮、公式块底色改为常显灰底。
 
-## 编辑区底部插画（github-onelight-leimi/bg-art.jpg）
+## 编辑区底部插画（github-onelight/img/bg-art.jpg）
 
 - 来源：《绝区零》影像档案壁纸「蕾米埃尔套件图」，版权归 miHoYo / HoYoverse 所有
 - 用途：仅作为 `github-onelight-leimi.css` 的编辑区背景装饰，供个人使用；**不在本仓库 MIT 许可范围内**

@@ -1,0 +1,79 @@
+/* Github Onelight — 引用块 / 警告框（onelight） */
+
+/* =====================================================================
+ * 引用块（onelight blockquote2，保留）
+ * ===================================================================== */
+#write blockquote {
+    background: var(--theme-light-color);
+    border-left: 5px solid var(--theme-color);
+    border-top-right-radius: var(--radius-small);
+    border-bottom-right-radius: var(--radius-small);
+    box-shadow: var(--box-shadow);
+    color: rgba(51, 51, 51, .85);
+    font-size: .9em;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding: 10px 10px 10px 20px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    transition: var(--bg-transition), box-shadow .3s ease;
+}
+
+#write blockquote:hover {
+    box-shadow: var(--box-shadow-large);
+}
+
+/* 嵌套引用：略微压暗底色以区分层级 */
+#write blockquote blockquote {
+    background: #f8f9fb;
+    box-shadow: none;
+    border-left-color: color-mix(in srgb, var(--theme-color) 55%, #fff);
+}
+
+/* 专注模式 */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+/* ---------------->> GitHub 风格警告框 > [!NOTE] 等（Typora 渲染为 div.md-alert） <<---------------- */
+#write .md-alert {
+    --alert-theme-color: var(--theme-color);
+    margin: 16px 0;
+    padding: 10px 14px;
+    border: 2px solid var(--alert-theme-color);
+    border-left-color: var(--alert-theme-color) !important;
+    border-radius: var(--radius-small);
+    background: color-mix(in srgb, var(--alert-theme-color) 10%, transparent);
+    box-shadow: var(--box-shadow);
+    transition: box-shadow .3s ease;
+}
+
+#write .md-alert:hover {
+    box-shadow: var(--box-shadow-large);
+}
+
+#write .md-alert-tip       { --alert-theme-color: rgb(31, 136, 61); }
+#write .md-alert-note      { --alert-theme-color: rgb(9, 105, 218); }
+#write .md-alert-important { --alert-theme-color: rgb(130, 80, 223); }
+#write .md-alert-warning   { --alert-theme-color: rgb(250, 173, 20); }
+#write .md-alert-caution   { --alert-theme-color: rgb(207, 34, 46); }
+
+/* 警告框内：行内代码反色、粗体着色 */
+#write .md-alert li code,
+#write .md-alert p code,
+#write .md-alert span code {
+    background: var(--alert-theme-color) !important;
+    color: #fff !important;
+}
+
+#write .md-alert strong {
+    color: var(--alert-theme-color);
+}
+
+/* 警告框内的引用块 */
+#write .md-alert blockquote {
+    border: 2px solid var(--alert-theme-color);
+    border-left-color: var(--alert-theme-color) !important;
+    border-radius: var(--radius-small);
+    background: color-mix(in srgb, var(--alert-theme-color) 20%, transparent);
+}
