@@ -1,7 +1,7 @@
-/* Github Onelight — 图片（phycat：居中 / 12px 圆角 / 悬停放大 1.05） */
+/* Github Onelight — 图片（phycat：居中 / 12px 圆角 / 悬停放大 1.05）+ 悬停触发的点击放大灯箱 */
 
 /* =====================================================================
- * 图片（phycat 风格：居中 + 12px 圆角 + 悬停放大）
+ * 图片（phycat 风格：居中 + 12px 圆角 + 悬停放大）+ 点击放大灯箱
  * ===================================================================== */
 /* 含图片的段落整体居中（phycat） */
 #write p:has(img) {
@@ -39,4 +39,94 @@
     padding: 2px 0px 0px 4px;
     font-size: 0.9em;
     color: inherit;
+}
+
+/* ---------------->> 点击图片放大 <<----------------
+ * 触发：Typora 给点中的图片加 .md-expand（点击图片旁空白、键盘移动光标进入图片时也会加）。
+ *       本主题只在"指针悬停在这张图上"时才进入放大态，所以空白点击 / 键盘进入只会像原生一样
+ *       显示 ![alt](src) 源码，不会放大。
+ * 保持：放大后，相邻文字块（p / 标题，且不含图片）的 ::before 变成透明全屏"点击捕获层"，
+ *       指针落在捕获层上等于悬停在相邻块上，放大态因此保持不闪。
+ * 关闭：Typora 每次光标变化都会重算 .md-expand。点击捕获层时光标落到该文字块开头，灯箱关闭；
+ *       展开期间前后相邻块本身不响应指针（只有捕获层响应），因此不会误开相邻图片。
+ *       点击放大图本身不做任何事（Typora 的 click 只会再次选中本图）。
+ * 边界：前后相邻块都不是文字段落 / 标题时没有捕获层，此时指针离开放大图即恢复原状。
+ * 注意 1：#write 自带 transform: translateZ(0)，会让 fixed 相对 #write 定位，展开期间临时取消。
+ * 注意 2：首行缩进模式下 Typora 有条高特异性规则会覆盖图片定位，定位相关属性一律 !important。
+ * 注意 3：:has() 不能嵌套 :has()，相邻块选择器用 :has(+ * > …) 写法绕开。
+ * 光标：不显示 zoom-in / zoom-out，放大态尺寸固定，避免误以为可以逐级缩放。
+ */
+#write:has(.md-image.md-img-loaded.md-expand > img) {
+    transform: none !important;
+}
+
+/* 展开期间：前后相邻块不响应指针（它们的捕获层伪元素单独设为响应） */
+#write :has(> .md-image.md-img-loaded.md-expand) + *,
+#write :has(+ * > .md-image.md-img-loaded.md-expand) {
+    pointer-events: none;
+}
+
+/* 放大态 img。三种保持条件：悬停本图 / 后一块的捕获层被悬停 / 前一块的捕获层被悬停 */
+#write .md-image.md-img-loaded.md-expand:hover > img,
+#write :has(+ :hover) > .md-image.md-img-loaded.md-expand > img,
+#write :hover + * > .md-image.md-img-loaded.md-expand > img {
+    position: fixed !important;
+    inset: 0 !important;
+    margin: auto !important;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: var(--lightbox-max-width) !important;
+    max-height: var(--lightbox-max-height) !important;
+    zoom: 1 !important;
+    transform: none;
+    border: 0;
+    border-radius: 6px;
+    filter: none;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
+    z-index: 9999 !important;
+    pointer-events: auto;
+    cursor: default;
+    transition: none;
+    animation: gh-ol-lightbox-in .18s ease-out;
+}
+
+/* 压暗遮罩：挂在放大图自身，点击穿透 */
+#write .md-image.md-img-loaded.md-expand:hover::before,
+#write :has(+ :hover) > .md-image.md-img-loaded.md-expand::before,
+#write :hover + * > .md-image.md-img-loaded.md-expand::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: var(--lightbox-backdrop);
+    z-index: 9997;
+    pointer-events: none;
+    animation: gh-ol-backdrop-in .18s ease-out;
+}
+
+/* 点击捕获层：后一个文字块 */
+#write :has(> .md-image.md-img-loaded.md-expand:hover) + :is(p, h1, h2, h3, h4, h5, h6):not(:has(.md-image))::before,
+#write :has(> .md-image.md-img-loaded.md-expand) + :is(p, h1, h2, h3, h4, h5, h6):not(:has(.md-image)):hover::before,
+#write :hover + :has(> .md-image.md-img-loaded.md-expand) + :is(p, h1, h2, h3, h4, h5, h6):not(:has(.md-image))::before,
+/* 点击捕获层：前一个文字块 */
+#write :is(p, h1, h2, h3, h4, h5, h6):not(:has(.md-image)):has(+ * > .md-image.md-img-loaded.md-expand:hover)::before,
+#write :is(p, h1, h2, h3, h4, h5, h6):not(:has(.md-image)):has(+ * > .md-image.md-img-loaded.md-expand):has(+ * + :hover)::before,
+#write :is(p, h1, h2, h3, h4, h5, h6):not(:has(.md-image)):hover:has(+ * > .md-image.md-img-loaded.md-expand)::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 9998;
+    pointer-events: auto;
+    cursor: default;
+}
+
+@keyframes gh-ol-lightbox-in {
+    from { opacity: 0; transform: scale(.96); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes gh-ol-backdrop-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
