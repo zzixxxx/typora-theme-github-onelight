@@ -1029,13 +1029,33 @@ pre[lang=diff] .cm-s-inner .cm-error {
     to   { opacity: 1; }
 }
 
-/* ---------------->> 主界面右下角背景图（onelight img/mutou2.gif） <<---------------- */
+/* ---------------->> 主界面背景：底部插画 + 右下角小人 gif（onelight img/mutou2.gif） <<----------------
+ * 三层背景自上而下：gif → 白色渐变纱（顶部全白渐入，压低插画饱和度保证文字可读）→ 插画。
+ * 只需改 :root 里的 --bg-art-* 变量：
+ *   --bg-art          插画路径，设为 none 即关闭
+ *   --bg-art-width    插画宽度（建议用 vw，默认铺满 100vw；纱的高度按 --bg-art-ratio 自动跟随）
+ *   --bg-art-ratio    插画 高/宽 比，换图时同步改
+ *   --bg-art-veil     纱的颜色透明度，alpha 越大插画越淡
+ */
+:root {
+    --bg-art: none;                 /* 想加插画：图片放进 github-onelight/，这里改成 url('./github-onelight/xxx.jpg') */
+    --bg-art-width: 100vw;
+    --bg-art-ratio: 0.5303;         /* 插画 高/宽 比 */
+    --bg-art-veil: rgba(255, 255, 255, .62);
+}
+
 content {
     background-color: transparent;
-    background-image: url('./github-onelight/mutou2.gif');
-    background-position: 100% 100%;
-    background-repeat: no-repeat;
-    background-size: 150px auto;
+    background-image:
+        url('./github-onelight/mutou2.gif'),
+        linear-gradient(to bottom, #fff 0%, var(--bg-art-veil) 28%, var(--bg-art-veil) 100%),
+        var(--bg-art);
+    background-position: 100% 100%, 50% 100%, 50% 100%;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-size:
+        150px auto,
+        100% calc(var(--bg-art-width) * var(--bg-art-ratio)),
+        var(--bg-art-width) auto;
     transition: background-image .5s ease-in-out, background-size .5s ease-in-out;
 }
 

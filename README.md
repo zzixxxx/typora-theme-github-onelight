@@ -76,7 +76,20 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 | `--lightbox-backdrop` | `rgba(0,0,0,.6)` | 灯箱遮罩 |
 | `--lightbox-max-width` / `--lightbox-max-height` | `92vw` / `92vh` | 灯箱最大尺寸 |
 
-不想要右下角动图：删掉 `content { ... }` 和 `div#megamenu-section-open { ... }` 两段即可。
+## 编辑区底部插画（可选，默认关闭）
+
+主题支持在编辑区背景底部铺一张自己的插画，右下角的小人 gif 会叠在它上面；插画上盖一层从顶部全白渐入的白纱，保证文字可读。仓库不附带图片，启用方法：把图片放进 `github-onelight/`，改 `github-onelight.css` 里 `content` 上方那个 `:root` 的变量：
+
+| 变量 | 默认值 | 作用 |
+| ---- | ------ | ---- |
+| `--bg-art` | `none` | 插画路径，如 `url('./github-onelight/bg-art.jpg')` |
+| `--bg-art-width` | `100vw` | 插画宽度，建议用 vw，居中贴底 |
+| `--bg-art-ratio` | `0.5303` | 插画 高/宽 比，换图时同步改，白纱高度靠它跟随 |
+| `--bg-art-veil` | `rgba(255,255,255,.62)` | 白纱透明度，alpha 越大插画越淡 |
+
+注意插画的版权，公开分发前确认有授权。
+
+不想要右下角动图：删掉 `content { ... }` 里 `mutou2.gif` 那一层和 `div#megamenu-section-open { ... }` 即可。
 
 ## 环境
 

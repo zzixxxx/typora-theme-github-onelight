@@ -28,6 +28,11 @@
 
   移植时的修改：颜色改为本主题变量、字号由 px 改为 em、去掉了与 github 骨架冲突的段落间距与字体设置、表格增加悬停高亮、公式块底色改为常显灰底。
 
+## 编辑区底部插画
+
+- 本仓库不附带插画图片，`--bg-art` 默认为 `none`
+- 自行启用时请使用有授权的图片；第三方图片不在本仓库 MIT 许可范围内
+
 ## phycat（sumruler/typora-theme-phycat）
 
 - 来源：https://github.com/sumruler/typora-theme-phycat
