@@ -28,10 +28,11 @@
 
   移植时的修改：颜色改为本主题变量、字号由 px 改为 em、去掉了与 github 骨架冲突的段落间距与字体设置、表格增加悬停高亮、公式块底色改为常显灰底。
 
-## 编辑区底部插画
+## 编辑区底部插画（github-onelight-leimi/bg-art.jpg）
 
-- 本仓库不附带插画图片，`--bg-art` 默认为 `none`
-- 自行启用时请使用有授权的图片；第三方图片不在本仓库 MIT 许可范围内
+- 来源：《绝区零》影像档案壁纸「蕾米埃尔套件图」，版权归 miHoYo / HoYoverse 所有
+- 用途：仅作为 `github-onelight-leimi.css` 的编辑区背景装饰，供个人使用；**不在本仓库 MIT 许可范围内**
+- 本体 `github-onelight.css` 不引用该图片（`--bg-art` 默认 `none`）；二次分发或商用请自行替换为有授权的图片，或不安装 Leimi 版
 
 ## phycat（sumruler/typora-theme-phycat）
 

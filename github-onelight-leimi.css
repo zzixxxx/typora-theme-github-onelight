@@ -1,0 +1,30 @@
+/* =====================================================================
+ * Github Onelight Leimi  —  Typora theme
+ * ---------------------------------------------------------------------
+ * 在 Github Onelight 的基础上启用编辑区底部插画（《绝区零》蕾米埃尔壁纸，版权见 THIRD_PARTY_NOTICES）。
+ * 依赖：同目录下的 github-onelight.css 与 github-onelight/ 资源目录，样式改动自动跟随。
+ * 资源目录：./github-onelight-leimi/
+ * Typora 菜单里显示为「Github Onelight Leimi」，可与「Github Onelight」随时切换。
+ * ===================================================================== */
+@import url("./github-onelight.css");
+
+:root {
+    --bg-art-width: 100vw;                      /* 插画宽度，居中贴底 */
+    --bg-art-ratio: 0.5303;                     /* 插画 高/宽 比（1920×1018），换图时同步改 */
+    --bg-art-veil: rgba(255, 255, 255, .62);    /* 白纱透明度，alpha 越大插画越淡 */
+}
+
+/* 三层背景自上而下：小人 gif → 白色渐变纱（顶部全白渐入）→ 插画
+ * 插画路径直接写在这里而不是放进 CSS 变量，避免不同 Chromium 版本对变量里相对路径的解析差异。 */
+content {
+    background-image:
+        url('./github-onelight/mutou2.gif'),
+        linear-gradient(to bottom, #fff 0%, var(--bg-art-veil) 28%, var(--bg-art-veil) 100%),
+        url('./github-onelight-leimi/bg-art.jpg');
+    background-position: 100% 100%, 50% 100%, 50% 100%;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-size:
+        150px auto,
+        100% calc(var(--bg-art-width) * var(--bg-art-ratio)),
+        var(--bg-art-width) auto;
+}
