@@ -967,25 +967,35 @@ pre[lang=diff] .cm-s-inner .cm-error {
 }
 
 /* ---------------->> 点击图片放大 <<----------------
- * 原理：点击图片后 Typora 给 .md-image 加上 .md-expand，
+ * 原理：点击图片后 Typora 给 .md-image 加上 .md-expand（光标进入图片源码时也会加），
  *       此时把 img 改为 fixed 定位、inset:0 + margin:auto 居中，
- *       用 .md-image::before 铺一层全屏遮罩；点击图片外任意位置（光标离开）即关闭。
+ *       用 .md-image::before 铺一层全屏遮罩。
+ * 关闭：点击遮罩下的文字或空白处（光标离开本图）即关闭；点击遮罩下的另一张图片会切换到它；
+ *       点击放大图本身不做任何事（Typora 的 click 只会再次选中本图）。
  * 注意 1：Typora 给 #write 设置了 transform: translateZ(0)，会让 fixed 相对 #write 定位，
  *         因此在展开期间临时取消该 transform。
  * 注意 2：开启"首行缩进"时 Typora 有条高特异性规则
  *         #write.first-line-indent p>.md-image:only-child img { position: relative; left: -2em }
  *         会覆盖普通声明，所以定位相关属性一律加 !important。
+ * 注意 3：img 变成 fixed 后会脱离文档流，下方内容上移，之后不管点哪里都会落到顶上来的下一张图。
+ *         因此让 .md-image 平时用 contain-intrinsic-size: auto 记住自己的渲染尺寸，
+ *         放大时加 contain: size 保住占位，版面不回流。
  */
+#write .md-image {
+    display: inline-block;
+    max-width: 100%;
+    contain-intrinsic-size: auto 0px;
+}
+
+#write .md-image.md-img-loaded.md-expand {
+    contain: size;
+}
+
 #write:has(.md-image.md-img-loaded.md-expand > img) {
     transform: none !important;
 }
 
-/* 全屏遮罩
- * 注意 3：Typora 在 mousedown 时就切换放大态，图片脱离文档流后下方内容立刻上移，
- *         mouseup 时指针下面已经是下一张图，浏览器会把光标落到它上面，导致"放大的是下一张"。
- *         因此遮罩出现后的前 0.45s 先接住指针事件（它是 .md-image 的伪元素，光标仍留在本图），
- *         之后再恢复点击穿透，保证"点击任意位置关闭"。
- */
+/* 全屏遮罩（点击穿透，落到文字/空白处即关闭） */
 #write .md-image.md-img-loaded.md-expand::before {
     content: '';
     position: fixed;
@@ -993,12 +1003,7 @@ pre[lang=diff] .cm-s-inner .cm-error {
     background: var(--lightbox-backdrop);
     z-index: 9998;
     pointer-events: none;
-    animation: gh-ol-backdrop-in .18s ease-out, gh-ol-click-guard .45s linear;
-}
-
-@keyframes gh-ol-click-guard {
-    0%, 99% { pointer-events: auto; }
-    100%    { pointer-events: none; }
+    animation: gh-ol-backdrop-in .18s ease-out;
 }
 
 /* 仅对加载成功的图片生效，加载失败的占位图不进灯箱 */
@@ -1018,7 +1023,8 @@ pre[lang=diff] .cm-s-inner .cm-error {
     filter: none;
     box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
     z-index: 9999 !important;
-    pointer-events: none;   /* 点击穿透：点图片本身也会让光标离开从而关闭 */
+    pointer-events: auto;   /* 不穿透：点放大图本身不做任何事，避免误点到底下的其他图片 */
+    cursor: default;
     transition: none;
     animation: gh-ol-lightbox-in .18s ease-out;
 }

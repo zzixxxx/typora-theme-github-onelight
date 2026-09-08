@@ -2,6 +2,13 @@
 
 以 Typora 内置 **github** 主题为骨架，融合 **onelight**、**mdmdt**、**phycat** 三个主题中各自最顺手的部分，并加入纯 CSS 实现的**图片点击放大**。
 
+仓库里有两个主题文件，装好后在 Typora 主题菜单里各占一项，可随时切换：
+
+| 主题菜单名 | 文件 | 说明 |
+| ---------- | ---- | ---- |
+| Github Onelight | `github-onelight.css` + `github-onelight/` | 主题本体 |
+| Github Onelight Leimi | `github-onelight-leimi.css` + `github-onelight-leimi/` | `@import` 本体，再在编辑区底部铺一张《绝区零》蕾米埃尔插画；样式改动自动跟随本体 |
+
 ## 各部分来源
 
 | 部分 | 来源 | 内容 |
@@ -31,10 +38,10 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 **方式二：手动**
 
 1. 在 Typora 中打开 `偏好设置 → 外观 → 打开主题文件夹`。
-2. 把 `github-onelight.css` 和 `github-onelight/` 文件夹一起复制进去。
-3. 重启 Typora，菜单 `主题 → Github Onelight`。
+2. 把 `github-onelight.css`、`github-onelight/` 复制进去；想要带插画的版本，再把 `github-onelight-leimi.css`、`github-onelight-leimi/` 一起复制进去。
+3. 重启 Typora，菜单 `主题 → Github Onelight` 或 `Github Onelight Leimi`。
 
-主题自包含，不依赖 onelight / mdmdt / phycat 本体。
+主题自包含，不依赖 onelight / mdmdt / phycat 本体。Leimi 版依赖同目录下的本体文件。
 
 ## 示例文档
 
@@ -55,8 +62,9 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 ## 图片点击放大的说明
 
 - 点击图片：图片在窗口正中放大到最多 92vw × 92vh，背景压暗。
-- 关闭：点击任意位置（包括图片本身）。
+- 关闭：点击遮罩下的文字或空白处（光标离开这张图即关闭）。点击遮罩下的另一张图片会切换到它；点击放大图本身不做任何事。
 - 原理：利用 Typora 点击图片时给 `.md-image` 加 `.md-expand` 的机制，把 img 改为 `position: fixed` 居中；Typora 给 `#write` 设置了 `transform: translateZ(0)`，展开期间会临时取消。
+- 放大时用 `contain-intrinsic-size: auto` + `contain: size` 保住图片原来的占位，版面不回流，否则关闭时的点击会落到顶上来的下一张图。
 - 已兼容 `偏好设置 → 段落首行缩进`（Typora 在该模式下有一条高特异性规则会覆盖图片定位，主题里用 `!important` 压过）。
 - 用键盘把光标移进图片时也会触发放大，这是该机制的副作用。
 
@@ -76,11 +84,11 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 | `--lightbox-backdrop` | `rgba(0,0,0,.6)` | 灯箱遮罩 |
 | `--lightbox-max-width` / `--lightbox-max-height` | `92vw` / `92vh` | 灯箱最大尺寸 |
 
-## 编辑区底部插画（可选，默认关闭）
+## 编辑区底部插画
 
-主题支持在编辑区背景底部铺一张自己的插画，右下角的小人 gif 会叠在它上面；插画上盖一层从顶部全白渐入的白纱，保证文字可读。仓库不附带图片。
+主题支持在编辑区背景底部铺一张插画，右下角的小人 gif 会叠在它上面；插画上盖一层从顶部全白渐入的白纱，保证文字可读。本体默认关闭；`github-onelight-leimi.css` 就是启用了插画的现成例子。
 
-推荐做法是**另建一个叠加主题文件**，这样主题菜单里多一项，可以随时切换，也不用改本文件。例如新建 `github-onelight-xxx.css`：
+想换成自己的图，推荐照 Leimi 的做法**另建一个叠加主题文件**，这样主题菜单里多一项，可以随时切换，也不用改本体。例如新建 `github-onelight-xxx.css`：
 
 ```css
 @import url("./github-onelight.css");
@@ -110,7 +118,7 @@ content {
 | `--bg-art-ratio` | `0.5303` | 插画 高/宽 比，换图时同步改，白纱高度靠它跟随 |
 | `--bg-art-veil` | `rgba(255,255,255,.62)` | 白纱透明度，alpha 越大插画越淡 |
 
-注意插画的版权，公开分发前确认有授权。
+Leimi 版的插画为《绝区零》官方壁纸，版权归 miHoYo / HoYoverse，仅供个人使用，详见 THIRD_PARTY_NOTICES。自换插画请注意版权。
 
 不想要右下角动图：删掉 `content { ... }` 里 `mutou2.gif` 那一层和 `div#megamenu-section-open { ... }` 即可。
 
