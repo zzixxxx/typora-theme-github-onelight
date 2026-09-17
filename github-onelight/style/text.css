@@ -194,3 +194,18 @@ a.reversefootnote::before,
     border-left: none;
     transform: rotate(40deg);
 }
+
+/* 表格内的复选框：Markdown 表格不支持 - [ ] 语法，单元格里直接写行内 HTML
+ *   <input type="checkbox">  未勾选      <input type="checkbox" checked>  已勾选
+ * 与任务列表复选框同款（上面的规则已覆盖尺寸 / 圆角 / 选中色）；这里只补两点：
+ *   ① 改为相对定位——上面 ::after 画的对勾是绝对定位，任务列表里 Typora 把 input 设为 absolute 所以对勾贴着自身，
+ *      表格单元格里 input 是普通行内元素，不加这一句对勾会跑到别处；
+ *   ② 去掉任务列表用的 margin-top 偏移，改成随文字垂直居中。
+ * 勾选状态存在源码的 checked 属性里：Typora 点击行内 HTML 会展开源码，加 / 删 checked 即可。 */
+#write table input[type="checkbox"] {
+    position: relative;
+    display: inline-block;
+    vertical-align: -2px;
+    margin: 0 2px 0 0;
+    cursor: default;
+}
