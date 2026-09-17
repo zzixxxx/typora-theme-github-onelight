@@ -195,17 +195,48 @@ a.reversefootnote::before,
     transform: rotate(40deg);
 }
 
-/* 表格内的复选框：Markdown 表格不支持 - [ ] 语法，单元格里直接写行内 HTML
- *   <input type="checkbox">  未勾选      <input type="checkbox" checked>  已勾选
- * 与任务列表复选框同款（上面的规则已覆盖尺寸 / 圆角 / 选中色）；这里只补两点：
- *   ① 改为相对定位——上面 ::after 画的对勾是绝对定位，任务列表里 Typora 把 input 设为 absolute 所以对勾贴着自身，
- *      表格单元格里 input 是普通行内元素，不加这一句对勾会跑到别处；
- *   ② 去掉任务列表用的 margin-top 偏移，改成随文字垂直居中。
- * 勾选状态存在源码的 checked 属性里：Typora 点击行内 HTML 会展开源码，加 / 删 checked 即可。 */
-#write table input[type="checkbox"] {
-    position: relative;
+/* ---------------->> 表格内的复选框（本主题） <<---------------- */
+/* Markdown 表格不支持 - [ ]，Typora 也不渲染行内 <input>（不在它的行内 HTML 白名单里，只会显示源码）。
+ * 用 span 代替：<span ty-class="cb">&nbsp;</span> 未勾选   <span ty-class="cb on">&nbsp;</span> 已勾选
+ *   - span 在 Typora 行内 HTML 白名单内；class 属性会被 Typora 的 DOMPurify 过滤（FORBID_ATTR），
+ *     ty-class 是 Typora 专门放行的替代属性（INLINE_CONFIG.ADD_ATTR），所以用属性选择器匹配。
+ *   - span 里必须有内容（用 &nbsp;）：空 span Typora 会把源码一起显示出来。
+ *   - 外观与上面任务列表复选框一致：14px、3px 圆角、选中主蓝 + 白色对勾。
+ *   - 勾选状态存在源码里：点击复选框 Typora 会展开这段 HTML 源码，加 / 删 on 即可。
+ *   - 单元格里用 <br> 分行时看到的灰色 <br> 标记是 Typora 自己的开关，不归主题管：
+ *     菜单 编辑 → 空白字符与换行 → 取消「可见 <br/>」即隐藏（body.hide-br-and-line-break）。 */
+#write [ty-class~="cb"] {
     display: inline-block;
+    position: relative;
+    width: 14px;
+    height: 14px;
+    margin: 0 4px 0 0;
     vertical-align: -2px;
-    margin: 0 2px 0 0;
-    cursor: default;
+    box-sizing: border-box;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    background: transparent;
+    font-size: 0;                               /* 占位的 &nbsp; 不撑开 */
+    line-height: 0;
+    overflow: hidden;                           /* 让 inline-block 基线落在底边，随文字对齐 */
+}
+
+#write [ty-class~="cb"][ty-class~="on"] {
+    background: var(--color-1);
+    border-color: transparent;
+}
+
+#write [ty-class~="cb"][ty-class~="on"]::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 2.5px;
+    left: 3.5px;
+    width: 5px;
+    height: 9px;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    border-top: none;
+    border-left: none;
+    transform: rotate(40deg);
 }

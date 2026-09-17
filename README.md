@@ -24,7 +24,7 @@
 | 大纲 / 文件 / TOC | mdmdt | 侧栏大纲与文件树的树形连线、圆角悬停高亮；`[TOC]` 时间轴样式 |
 | 图片 | phycat | 含图段落居中、12px 圆角、悬停放大 1.05 |
 | 图片点击放大 | 本主题 | 悬停并点击图片时居中放大并压暗背景，点遮罩关闭 |
-| 表格内复选框 | 本主题 | 单元格里写 `<input type="checkbox">` / `<input type="checkbox" checked>`，渲染成与任务列表同款的复选框（Markdown 表格不支持 `- [ ]`） |
+| 表格内复选框 | 本主题 | 单元格里写 `<span ty-class="cb">&nbsp;</span>` / `<span ty-class="cb on">&nbsp;</span>`，渲染成与任务列表同款的复选框（Markdown 表格不支持 `- [ ]`，Typora 也不渲染 `<input>`；用法见 `examples/02-表格.md`） |
 
 ## 安装
 
